@@ -102,3 +102,35 @@ their open-source portfolio. Here's some things you could do:
 - [ ] Allow array results with 
   `querySelectorAll`
 - [ ] Support mapping queryResults into custom response format
+
+
+## Example use-case
+
+I needed to convert selected text from mandarin into pinyin. Pinyin
+helps mandarin learners know how to pronounce the characters. Here's
+an automator script that leverages the API in action.
+
+![](https://www.dropbox.com/s/w0om04f5xzf9cbv/2018-03-15%2012.56.54.gif?raw=1)
+
+Here's the automator script.
+![](https://www.dropbox.com/s/gao6zlp0ykn49ri/Captura%20de%20pantalla%202018-03-15%20a%20la%28s%29%201.00.31%20p.%20m..png?raw=1)
+
+Here's the code within the "execute shell script" step.
+
+```bash
+curl -X POST \
+  http://example.herokuapp.com/api/query_selector \
+  -H 'Content-Type: application/json' \
+  -d '{
+	"method": "POST",
+	"url": "https://www.chineseconverter.com/en/convert/chinese-to-pinyin",
+	"formData": {
+		"text": "'"$1"'",
+		"type": 0
+	},
+	"selector": "form[name=conversion] .row-fluid:nth-of-type(1) > div:nth-of-type(2) .span12 .row-fluid .span12"
+}' | /usr/local/bin/jq --raw-output .data.attributes.innerHTML
+```
+
+Note that the code depends on [jq](https://stedolan.github.io/jq/) being installed for pulling the result from the curl command's returned JSON.
+
