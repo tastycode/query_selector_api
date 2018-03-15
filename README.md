@@ -77,6 +77,16 @@ description of the error. For example
 }
 
 ```
+## Running
+
+
+`yarn start`
+
+## Deploying to heroku
+
+Since the app declares a start script and accepts a `PORT` environment
+variable, the app simply needs to be pushed to heroku.
+
 
 ## Roadmap
 
@@ -92,5 +102,3 @@ their open-source portfolio. Here's some things you could do:
 - [ ] Allow array results with 
   `querySelectorAll`
 - [ ] Support mapping queryResults into custom response format
-
-
